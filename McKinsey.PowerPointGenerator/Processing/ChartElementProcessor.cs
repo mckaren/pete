@@ -297,13 +297,13 @@ namespace McKinsey.PowerPointGenerator.Processing
 
         private void ReplaceBarChart(List<ChartSeriesElement> newSeries, BarChart chart, ShapeElementBase element, bool isWaterfall)
         {
-            int newSeriesCount = element.Data.Columns.Count;// newSeries.Count;
+            int newSeriesCount = element.Data.Columns.Count(c => !c.IsHidden);// newSeries.Count;
             var seriesList = SetChartSeries<BarChartSeries>(chart, newSeriesCount, true);
             int index = 0;
             for (int i = 0; i < newSeries.Count; i++)
             {
                 ChartSeriesElement newSeriesItem = newSeries[i];
-                if ((element.RowIndexes.Count == 1 && element.RowIndexes[0].IsAll) || element.RowIndexes.Any(idx => idx == newSeriesItem.ColumnIndex))
+                if ((element.RowIndexes.Count == 1 && element.RowIndexes[0].IsAll) || element.ColumnIndexes.Any(idx => idx == newSeriesItem.ColumnIndex))
                 {
                     var seriesItem = seriesList.ElementAt(index);
                     Column dataColumn = element.Data.Column(newSeriesItem.ColumnIndex);

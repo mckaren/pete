@@ -38,9 +38,9 @@ namespace McKinsey.PowerPointGenerator.App
 
         public MainViewModel()
         {
-            DataFilePath = @"C:\Users\Karen Jones\Documents\GitHub\pete\McKinsey.PowerPointGenerator.App\Resources\PeTE demo.xlsx";
-            TemplateFilePath = @"C:\Users\Karen Jones\Documents\GitHub\pete\McKinsey.PowerPointGenerator.App\Resources\PeTE demo.pptx";
-            OutputPath = @"C:\Users\Karen Jones\Desktop\WIP\04 PeTE\QA\test.pptx";
+            DataFilePath = @"C:\Users\Karen Jones\Desktop\WIP\04 PeTE\QA\ReportForPeTE_06-30-16_19-19-03.xlsx";
+            TemplateFilePath = @"C:\Users\Karen Jones\Desktop\WIP\04 PeTE\QA\LegendTest2.pptm";
+            OutputPath = @"C:\Users\Karen Jones\Desktop\WIP\04 PeTE\QA\test.pptm";
         }
 
         private bool CanExecuteGenerateCommand()
