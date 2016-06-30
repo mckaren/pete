@@ -174,6 +174,10 @@ namespace McKinsey.PowerPointGenerator.Processing
                     dataRange = GetFixedDataRange<BarChartSeries>(barchart);
                     element.Data.TrimOrExpand(dataRange.Item1, dataRange.Item2);
                 }
+                if (element.IsWaterfall)
+                {
+                    type = ChartType.Waterfall;
+                }
             }
             else if (scatterChart != null)
             {
@@ -189,10 +193,6 @@ namespace McKinsey.PowerPointGenerator.Processing
                     dataRange = GetFixedDataRange<LineChartSeries>(barchart);
                     element.Data.TrimOrExpand(dataRange.Item1, dataRange.Item2);
                 }
-            }
-            if (element.IsWaterfall)
-            {
-                type = ChartType.Waterfall;
             }
         }
 
