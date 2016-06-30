@@ -37,8 +37,8 @@ namespace McKinsey.PowerPointGenerator.Core.Data
             DataElement fragment = new DataElement { Name = Name, HasColumnHeaders = HasColumnHeaders, HasRowHeaders = HasRowHeaders };
 
             List<Row> rowsToTake;
-            bool takeAllRows = false;// rowIndexes.Any(i => i.IsAll) || rowIndexes.Where(i => HasRow(i)).Count() == 0;
-            bool takeAllColumns = false;//columnIndexes.Any(i => i.IsAll) || columnIndexes.Where(i => HasColumn(i)).Count() == 0;
+            bool takeAllRows = rowIndexes.Count == 1 && rowIndexes[0].IsAll; // rowIndexes.Any(i => i.IsAll) || rowIndexes.Where(i => HasRow(i)).Count() == 0;
+            bool takeAllColumns = columnIndexes.Count == 1 && columnIndexes[0].IsAll;  //columnIndexes.Any(i => i.IsAll) || columnIndexes.Where(i => HasColumn(i)).Count() == 0;
             if (rowIndexes.Count == 0 || takeAllRows)
             {
                 rowsToTake = Rows;
