@@ -30,7 +30,7 @@ namespace McKinsey.PowerPointGenerator.Elements
     public abstract class ShapeElementBase
     {
         private static Regex nameParseRegex = new Regex(@"^(?<name>[\w_]+)(?<indexes>(?:\[(?<columns>.*?)\])?(?:\[(?<rows>.*?)\]))?(?:(?:\s+)(?<commands>.*))?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static Regex indexParseRegex = new Regex(@"^(?:\[(?<columns>.*?)\])?(?:\[(?<rows>.*?)\])$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex indexParseRegex = new Regex(@"^(?:\[(?<columns>.*?)\])?(?:\[(?<rows>.*?)\])?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private bool isMainIndexExtracted = false;
 
         internal DataElementDescriptor DataDescriptor { get; set; }
