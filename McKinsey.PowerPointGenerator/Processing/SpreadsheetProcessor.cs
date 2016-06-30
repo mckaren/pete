@@ -25,7 +25,14 @@ namespace McKinsey.PowerPointGenerator.Processing
             axisDataFormula = worksheet.Cells[1, 0, data.Rows.Count, 0].Address;
             foreach (Row row in data.Rows)
             {
-                worksheet.Cells[rowNo, columnNo].Value = row.Header;
+                if (string.IsNullOrEmpty(row.MappedHeader))
+                {
+                    worksheet.Cells[rowNo, columnNo].Value = row.Header;
+                }
+                else
+                {
+                    worksheet.Cells[rowNo, columnNo].Value = row.MappedHeader;
+                }
                 rowNo++;
             }
             columnNo++;

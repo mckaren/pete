@@ -111,22 +111,31 @@ namespace McKinsey.PowerPointGenerator.Processing
                 }
             }
             seriesIndex = 0;
-            foreach (YCommand yCommand in element.CommandsOf<YCommand>())
+            if (element.CommandsOf<YCommand>().Count > 0)
             {
-                ChartSeriesElement yChartSeries = newSeries.FirstOrDefault(s => s.ColumnIndex == yCommand.Index && !s.ColumnIndex.IsCore);
-                if (seriesIndex < newSeries.Count)
+                List<ChartSeriesElement> newSeriesWithoutY = new List<ChartSeriesElement>(newSeries);
+                foreach (YCommand yCommand in element.CommandsOf<YCommand>())
                 {
-                    newSeries[seriesIndex].YValues = yChartSeries;
+                    ChartSeriesElement yChartSeries = newSeries.FirstOrDefault(s => s.ColumnIndex == yCommand.Index);  //  && !s.ColumnIndex.IsCore
+                    if (yChartSeries != null)
+                    {
+                        newSeriesWithoutY.Remove(yChartSeries);
+                    }
                 }
-                seriesIndex++;
-            }
-            foreach (YCommand yCommand in element.CommandsOf<YCommand>())
-            {
-                ChartSeriesElement yChartSeries = newSeries.FirstOrDefault(s => s.ColumnIndex == yCommand.Index && !s.ColumnIndex.IsCore);
-                if (yChartSeries != null)
+                foreach (YCommand yCommand in element.CommandsOf<YCommand>())
                 {
-                    newSeries.Remove(yChartSeries);
+                    ChartSeriesElement yChartSeries = newSeries.FirstOrDefault(s => s.ColumnIndex == yCommand.Index); // && !s.ColumnIndex.IsCore
+                    for (int i = seriesIndex; i < newSeriesWithoutY.Count; i++)
+                    {
+                        newSeriesWithoutY[i].YValues = yChartSeries;
+                    }
+                    //if (seriesIndex < newSeries.Count)
+                    //{
+                    //    newSeries[seriesIndex].YValues = yChartSeries;
+                    //}
+                    seriesIndex++;
                 }
+                newSeries = new List<ChartSeriesElement>(newSeriesWithoutY);
             }
 
 
@@ -174,10 +183,6 @@ namespace McKinsey.PowerPointGenerator.Processing
                     dataRange = GetFixedDataRange<BarChartSeries>(barchart);
                     element.Data.TrimOrExpand(dataRange.Item1, dataRange.Item2);
                 }
-                if (element.IsWaterfall)
-                {
-                    type = ChartType.Waterfall;
-                }
             }
             else if (scatterChart != null)
             {
@@ -193,6 +198,10 @@ namespace McKinsey.PowerPointGenerator.Processing
                     dataRange = GetFixedDataRange<LineChartSeries>(barchart);
                     element.Data.TrimOrExpand(dataRange.Item1, dataRange.Item2);
                 }
+            }
+            if (element.IsWaterfall)
+            {
+                type = ChartType.Waterfall;
             }
         }
 
@@ -566,7 +575,7 @@ namespace McKinsey.PowerPointGenerator.Processing
                 if (dataColumn.Data[rowNo] != null)
                 {
                     var point = new NumericPoint() { Index = new UInt32Value((uint)rowNo) };
-                    point.NumericValue = new NumericValue(dataColumn.Data[rowNo] == null ? "0" : dataColumn.Data[rowNo].ToString());
+                    point.NumericValue = new NumericValue(dataColumn.Data[rowNo] == null ? "0" : string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}", dataColumn.Data[rowNo]));
                     valuesNumberReference.NumberingCache.Append(point);
                 }
             }
