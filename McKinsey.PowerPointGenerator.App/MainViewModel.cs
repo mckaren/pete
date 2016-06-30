@@ -38,9 +38,9 @@ namespace McKinsey.PowerPointGenerator.App
 
         public MainViewModel()
         {
-            DataFilePath = @"C:\Users\Karen Jones\Desktop\WIP\04 PeTE\QA\ReportForPeTE_06-30-16_19-19-03.xlsx";
-            TemplateFilePath = @"C:\Users\Karen Jones\Desktop\WIP\04 PeTE\QA\LegendTest2.pptm";
-            OutputPath = @"C:\Users\Karen Jones\Desktop\WIP\04 PeTE\QA\test.pptm";
+            //DataFilePath = @"C:\Users\Karen Jones\Desktop\WIP\04 PeTE\QA\ReportForPeTE_06-30-16_19-19-03.xlsx";
+            //TemplateFilePath = @"C:\Users\Karen Jones\Desktop\WIP\04 PeTE\QA\TextTest.pptm";
+            //OutputPath = @"C:\Users\Karen Jones\Desktop\WIP\04 PeTE\QA\test.pptm";
         }
 
         private bool CanExecuteGenerateCommand()
@@ -69,7 +69,7 @@ namespace McKinsey.PowerPointGenerator.App
         public async void Generate()
         {
             MainWindow mainWindow = ((CurrentWindowService)RootWindow).Window as MainWindow;
-            //OutputPath = mainWindow.OpenSaveDialog();
+            OutputPath = mainWindow.OpenSaveDialog();
             if (string.IsNullOrEmpty(OutputPath))
             {
                 return;

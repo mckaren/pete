@@ -226,13 +226,13 @@ namespace McKinsey.PowerPointGenerator.Processing
 
         private void ReplaceLineChart(List<ChartSeriesElement> newSeries, LineChart chart, ShapeElementBase element)
         {
-            int newSeriesCount = element.Data.Columns.Count;// newSeries.Count;
+            int newSeriesCount = element.Data.Columns.Count(c => !c.IsHidden);// newSeries.Count;
             var seriesList = SetChartSeries<LineChartSeries>(chart, newSeriesCount, true);
             int index = 0;
             for (int i = 0; i < newSeries.Count; i++)
             {
                 ChartSeriesElement newSeriesItem = newSeries[i];
-                if (element.RowIndexes.Any(idx => idx == newSeriesItem.ColumnIndex))
+                if ((element.RowIndexes.Count == 1 && element.RowIndexes[0].IsAll) || element.ColumnIndexes.Any(idx => idx == newSeriesItem.ColumnIndex) || element.RowIndexes.Any(idx => idx == newSeriesItem.ColumnIndex))
                 {
                     var seriesItem = seriesList.ElementAt(index);
                     Column dataColumn = element.Data.Column(newSeriesItem.ColumnIndex);
@@ -256,7 +256,7 @@ namespace McKinsey.PowerPointGenerator.Processing
 
         private void ReplaceScatterChart(List<ChartSeriesElement> newSeries, ScatterChart chart, ShapeElementBase element)
         {
-            int newSeriesCount = element.Data.Columns.Count;// newSeries.Count;
+            int newSeriesCount = element.Data.Columns.Count(c => !c.IsHidden);// newSeries.Count;
             ChartSeriesElement yValuesSeries = null;
             var seriesList = SetChartSeries<ScatterChartSeries>(chart, newSeriesCount, false);
             int index = 0;
@@ -272,7 +272,7 @@ namespace McKinsey.PowerPointGenerator.Processing
                     throw new Exception("At least on Y series required for scatter chart");
                 }
                 ChartSeriesElement newSeriesItem = newSeries.ElementAt(i);
-                if (element.RowIndexes.Any(idx => idx == newSeriesItem.ColumnIndex))
+                if ((element.RowIndexes.Count == 1 && element.RowIndexes[0].IsAll) || element.ColumnIndexes.Any(idx => idx == newSeriesItem.ColumnIndex) || element.RowIndexes.Any(idx => idx == newSeriesItem.ColumnIndex))
                 {
                     var seriesItem = seriesList.ElementAt(index);
                     Column dataColumn = element.Data.Column(newSeriesItem.ColumnIndex);
@@ -303,7 +303,7 @@ namespace McKinsey.PowerPointGenerator.Processing
             for (int i = 0; i < newSeries.Count; i++)
             {
                 ChartSeriesElement newSeriesItem = newSeries[i];
-                if ((element.RowIndexes.Count == 1 && element.RowIndexes[0].IsAll) || element.ColumnIndexes.Any(idx => idx == newSeriesItem.ColumnIndex))
+                if ((element.RowIndexes.Count == 1 && element.RowIndexes[0].IsAll) || element.ColumnIndexes.Any(idx => idx == newSeriesItem.ColumnIndex) || element.RowIndexes.Any(idx => idx == newSeriesItem.ColumnIndex))
                 {
                     var seriesItem = seriesList.ElementAt(index);
                     Column dataColumn = element.Data.Column(newSeriesItem.ColumnIndex);
@@ -348,7 +348,7 @@ namespace McKinsey.PowerPointGenerator.Processing
         {
             int dataCount = dataColumn.Data.Count;
             UInt32Value pointCount = new UInt32Value((uint)dataCount);
-            if (categoryAxisData.StringReference != null)
+            if (categoryAxisData != null && categoryAxisData.StringReference != null)
             {
                 categoryAxisData.StringReference.StringCache.RemoveAllChildren<StringPoint>();
                 categoryAxisData.StringReference.StringCache.PointCount.Val = pointCount;
