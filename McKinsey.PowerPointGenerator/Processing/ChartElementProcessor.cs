@@ -183,6 +183,10 @@ namespace McKinsey.PowerPointGenerator.Processing
                     dataRange = GetFixedDataRange<BarChartSeries>(barchart);
                     element.Data.TrimOrExpand(dataRange.Item1, dataRange.Item2);
                 }
+                if (element.IsWaterfall)
+                {
+                    type = ChartType.Waterfall;
+                }
             }
             else if (scatterChart != null)
             {
@@ -198,10 +202,6 @@ namespace McKinsey.PowerPointGenerator.Processing
                     dataRange = GetFixedDataRange<LineChartSeries>(barchart);
                     element.Data.TrimOrExpand(dataRange.Item1, dataRange.Item2);
                 }
-            }
-            if (element.IsWaterfall)
-            {
-                type = ChartType.Waterfall;
             }
         }
 
@@ -241,7 +241,7 @@ namespace McKinsey.PowerPointGenerator.Processing
                     SetSeriesText(seriesItem, newSeriesItem, dataColumn.GetHeader());
                     var values = seriesItem.FirstElement<Values>();
                     FillNumberReference(values.NumberReference, newSeriesItem, dataColumn);
-                    FillSeriesDataPoints(seriesItem, dataColumn);
+                    //FillSeriesDataPoints(seriesItem, dataColumn);
                     FillSeriesLabels(seriesItem, dataColumn);
                     SetPropertiesFromLegend(seriesItem, dataColumn);
                     var errorBars = seriesItem.FirstElement<ErrorBars>();
@@ -303,7 +303,7 @@ namespace McKinsey.PowerPointGenerator.Processing
             for (int i = 0; i < newSeries.Count; i++)
             {
                 ChartSeriesElement newSeriesItem = newSeries[i];
-                if (element.RowIndexes.Any(idx => idx == newSeriesItem.ColumnIndex))
+                if ((element.RowIndexes.Count == 1 && element.RowIndexes[0].IsAll) || element.RowIndexes.Any(idx => idx == newSeriesItem.ColumnIndex))
                 {
                     var seriesItem = seriesList.ElementAt(index);
                     Column dataColumn = element.Data.Column(newSeriesItem.ColumnIndex);
@@ -313,10 +313,10 @@ namespace McKinsey.PowerPointGenerator.Processing
                     var values = seriesItem.FirstElement<Values>();
                     FillNumberReference(values.NumberReference, newSeriesItem, dataColumn);
                     FillSeriesDataPoints(seriesItem, dataColumn);
-                    FillSeriesLabels(seriesItem, dataColumn);
                     SetPropertiesFromLegend(seriesItem, dataColumn);
                     if (isWaterfall)
                     {
+                        FillSeriesLabels(seriesItem, dataColumn);
                         SetWaterfallStructure(seriesItem, dataColumn);
                     }
 
@@ -399,86 +399,84 @@ namespace McKinsey.PowerPointGenerator.Processing
 
         private void FillSeriesLabels(OpenXmlCompositeElement seriesItem, Column dataColumn)
         {
-            // This seems to be redundant but not 100% sure.
-
-            //var labels = seriesItem.FirstElement<DataLabels>();
-            //if (labels == null)
-            //{
-            //    return;
-            //}
-            //TextProperties defaultTextProperties = labels.FirstElement<TextProperties>();
-            //ChartShapeProperties defaultChartShapeProperties = labels.FirstElement<ChartShapeProperties>();
-            //NumberingFormat defaultNumberingFormat = labels.FirstElement<NumberingFormat>();
-            //ShowLegendKey defaultShowLegendKey = labels.FirstElement<ShowLegendKey>();
-            //ShowValue defaultShowValue = labels.FirstElement<ShowValue>();
-            //ShowCategoryName defaultShowCategoryName = labels.FirstElement<ShowCategoryName>();
-            //ShowSeriesName defaultShowSeriesName = labels.FirstElement<ShowSeriesName>();
-            //ShowPercent defaultShowPercent = labels.FirstElement<ShowPercent>();
-            //ShowBubbleSize defaultShowBubbleSize = labels.FirstElement<ShowBubbleSize>();
-            //ShowLeaderLines defaultShowLeaderLines = labels.FirstElement<ShowLeaderLines>();
-            //DLblsExtension defaultDLblsExtension = labels.FirstElement<DLblsExtension>();
-            //for (int rowNo = 0; rowNo < dataColumn.Data.Count; rowNo++)
-            //{
-            //    if (dataColumn.Data[rowNo] != null)
-            //    {
-            //        DataLabel dl = labels.Elements<DataLabel>().FirstOrDefault(l => l.Index != null && l.Index.Val != null && l.Index.Val.Value == rowNo);
-            //        //if (dl != null)
-            //        //{
-            //        //    Delete delete = dl.FirstElement<Delete>();
-            //        //    if (delete == null || !delete.Val)
-            //        //    {
-            //        //        var tp = dl.FirstElement<TextProperties>();
-            //        //        if (tp != null)
-            //        //        {
-            //        //            textProperties = tp.CloneNode(true) as TextProperties;
-            //        //        }
-            //        //        labels.RemoveChild<DataLabel>(dl);
-            //        //        dl = null;
-            //        //    }
-            //        //}
-            //        if (dl == null)
-            //        {
-            //            var newDataLabel = new DataLabel();
-            //            DocumentFormat.OpenXml.Drawing.Charts.Index index = new DocumentFormat.OpenXml.Drawing.Charts.Index() { Val = new UInt32Value((uint)rowNo) };
-            //            newDataLabel.Index = index;
-            //            if (defaultNumberingFormat != null)
-            //            {
-            //                newDataLabel.Append(defaultNumberingFormat.CloneNode(true));
-            //            }
-            //            if (defaultChartShapeProperties != null)
-            //            {
-            //                newDataLabel.Append(labels.FirstElement<ChartShapeProperties>().CloneNode(true));
-            //            }
-            //            if (defaultTextProperties != null)
-            //            {
-            //                newDataLabel.Append(defaultTextProperties.CloneNode(true));
-            //            }
-            //            newDataLabel.Append(defaultShowLegendKey.CloneNode(true));
-            //            newDataLabel.Append(defaultShowValue.CloneNode(true));
-            //            newDataLabel.Append(defaultShowCategoryName.CloneNode(true));
-            //            newDataLabel.Append(defaultShowSeriesName.CloneNode(true));
-            //            newDataLabel.Append(defaultShowPercent.CloneNode(true));
-            //            newDataLabel.Append(defaultShowBubbleSize.CloneNode(true));
-            //            if (defaultShowLeaderLines != null)
-            //            {
-            //                newDataLabel.Append(defaultShowLeaderLines.CloneNode(true));
-            //            }
-            //            if (defaultDLblsExtension != null)
-            //            {
-            //                newDataLabel.Append(defaultDLblsExtension.CloneNode(true));
-            //            }
-            //            DataLabel lastDataLabel = labels.Elements<DataLabel>().LastOrDefault(l => l.Index != null && l.Index.Val != null && l.Index.Val.Value < rowNo);
-            //            if (lastDataLabel != null)
-            //            {
-            //                labels.InsertAfter(newDataLabel, lastDataLabel);
-            //            }
-            //            else
-            //            {
-            //                labels.InsertAt(newDataLabel, 0);
-            //            }
-            //        }
-            //    }
-            //}
+            var labels = seriesItem.FirstElement<DataLabels>();
+            if (labels == null)
+            {
+                return;
+            }
+            TextProperties defaultTextProperties = labels.FirstElement<TextProperties>();
+            ChartShapeProperties defaultChartShapeProperties = labels.FirstElement<ChartShapeProperties>();
+            NumberingFormat defaultNumberingFormat = labels.FirstElement<NumberingFormat>();
+            ShowLegendKey defaultShowLegendKey = labels.FirstElement<ShowLegendKey>();
+            ShowValue defaultShowValue = labels.FirstElement<ShowValue>();
+            ShowCategoryName defaultShowCategoryName = labels.FirstElement<ShowCategoryName>();
+            ShowSeriesName defaultShowSeriesName = labels.FirstElement<ShowSeriesName>();
+            ShowPercent defaultShowPercent = labels.FirstElement<ShowPercent>();
+            ShowBubbleSize defaultShowBubbleSize = labels.FirstElement<ShowBubbleSize>();
+            ShowLeaderLines defaultShowLeaderLines = labels.FirstElement<ShowLeaderLines>();
+            DLblsExtension defaultDLblsExtension = labels.FirstElement<DLblsExtension>();
+            for (int rowNo = 0; rowNo < dataColumn.Data.Count; rowNo++)
+            {
+                if (dataColumn.Data[rowNo] != null)
+                {
+                    DataLabel dl = labels.Elements<DataLabel>().FirstOrDefault(l => l.Index != null && l.Index.Val != null && l.Index.Val.Value == rowNo);
+                    //if (dl != null)
+                    //{
+                    //    Delete delete = dl.FirstElement<Delete>();
+                    //    if (delete == null || !delete.Val)
+                    //    {
+                    //        var tp = dl.FirstElement<TextProperties>();
+                    //        if (tp != null)
+                    //        {
+                    //            textProperties = tp.CloneNode(true) as TextProperties;
+                    //        }
+                    //        labels.RemoveChild<DataLabel>(dl);
+                    //        dl = null;
+                    //    }
+                    //}
+                    if (dl == null)
+                    {
+                        var newDataLabel = new DataLabel();
+                        DocumentFormat.OpenXml.Drawing.Charts.Index index = new DocumentFormat.OpenXml.Drawing.Charts.Index() { Val = new UInt32Value((uint)rowNo) };
+                        newDataLabel.Index = index;
+                        if (defaultNumberingFormat != null)
+                        {
+                            newDataLabel.Append(defaultNumberingFormat.CloneNode(true));
+                        }
+                        if (defaultChartShapeProperties != null)
+                        {
+                            newDataLabel.Append(labels.FirstElement<ChartShapeProperties>().CloneNode(true));
+                        }
+                        if (defaultTextProperties != null)
+                        {
+                            newDataLabel.Append(defaultTextProperties.CloneNode(true));
+                        }
+                        newDataLabel.Append(defaultShowLegendKey.CloneNode(true));
+                        newDataLabel.Append(defaultShowValue.CloneNode(true));
+                        newDataLabel.Append(defaultShowCategoryName.CloneNode(true));
+                        newDataLabel.Append(defaultShowSeriesName.CloneNode(true));
+                        newDataLabel.Append(defaultShowPercent.CloneNode(true));
+                        newDataLabel.Append(defaultShowBubbleSize.CloneNode(true));
+                        if (defaultShowLeaderLines != null)
+                        {
+                            newDataLabel.Append(defaultShowLeaderLines.CloneNode(true));
+                        }
+                        if (defaultDLblsExtension != null)
+                        {
+                            newDataLabel.Append(defaultDLblsExtension.CloneNode(true));
+                        }
+                        DataLabel lastDataLabel = labels.Elements<DataLabel>().LastOrDefault(l => l.Index != null && l.Index.Val != null && l.Index.Val.Value < rowNo);
+                        if (lastDataLabel != null)
+                        {
+                            labels.InsertAfter(newDataLabel, lastDataLabel);
+                        }
+                        else
+                        {
+                            labels.InsertAt(newDataLabel, 0);
+                        }
+                    }
+                }
+            }
         }
 
         private void SetWaterfallStructure(BarChartSeries seriesItem, Column dataColumn)
@@ -495,7 +493,10 @@ namespace McKinsey.PowerPointGenerator.Processing
                 chartShapeProperties.Append(new A.NoFill());
                 dataPoint.Append(chartShapeProperties);
                 DataLabel label = labels.Elements<DataLabel>().FirstOrDefault(p => p.Index != null && p.Index.Val != null && p.Index.Val.Value == valueToHideInd);
-                label.FirstElement<ShowValue>().Val.Value = false;
+                if (label != null)
+                {
+                    label.FirstElement<ShowValue>().Val.Value = false;
+                }
             }
             labels.FirstElement<ShowValue>().Val.Value = false;
         }
