@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{36B40FB4-6388-45C5-BBA1-24F63AF3D8D0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>McKinsey.PowerPointGenerator</RootNamespace>
+    <AssemblyName>McKinsey.PowerPointGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.5.1405-prerelease\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.5.1405-prerelease\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1405-prerelease\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="NCalc">
+      <HintPath>..\packages\ncalc.1.3.8\lib\NCalc.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="SpreadsheetGear2012.Core, Version=7.1.2.136, Culture=neutral, PublicKeyToken=39c186f5904944ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpreadsheetGear.7.1.2.136\lib\net40\SpreadsheetGear2012.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SpreadsheetGear2012.Drawing, Version=7.1.2.136, Culture=neutral, PublicKeyToken=39c186f5904944ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpreadsheetGear.7.1.2.136\lib\net40\SpreadsheetGear2012.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="SpreadsheetGear2012.Windows.Forms, Version=7.1.2.136, Culture=neutral, PublicKeyToken=39c186f5904944ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpreadsheetGear.7.1.2.136\lib\net40\SpreadsheetGear2012.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="SpreadsheetGear2012.Windows.Forms.Integration, Version=7.1.2.136, Culture=neutral, PublicKeyToken=39c186f5904944ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpreadsheetGear.7.1.2.136\lib\net40\SpreadsheetGear2012.Windows.Forms.Integration.dll</HintPath>
+    </Reference>
+    <Reference Include="SpreadsheetGear2012.Windows.WPF, Version=7.1.2.136, Culture=neutral, PublicKeyToken=39c186f5904944ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpreadsheetGear.7.1.2.136\lib\net40\SpreadsheetGear2012.Windows.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Commands\FormulaHelper.cs" />
+    <Compile Include="Commands\YCommand.cs" />
+    <Compile Include="Commands\IUseColumnIndexes.cs" />
+    <Compile Include="Commands\FixedCommand.cs" />
+    <Compile Include="Commands\FormatCommand.cs" />
+    <Compile Include="Commands\FormulaCommand.cs" />
+    <Compile Include="Commands\LegendCommand.cs" />
+    <Compile Include="Commands\ColumnHeaderCommand.cs" />
+    <Compile Include="Commands\NoContentCommand.cs" />
+    <Compile Include="Commands\RowHeaderCommand.cs" />
+    <Compile Include="Commands\PageCommand.cs" />
+    <Compile Include="Commands\ReplaceCommand.cs" />
+    <Compile Include="Commands\SkipCommand.cs" />
+    <Compile Include="Commands\SortCommand.cs" />
+    <Compile Include="Commands\SortOrder.cs" />
+    <Compile Include="Commands\TakeCommand.cs" />
+    <Compile Include="Commands\TransposeCommand.cs" />
+    <Compile Include="Commands\VisibleCommand.cs" />
+    <Compile Include="Commands\ErrorBarCommand.cs" />
+    <Compile Include="Commands\WaterfallCommand.cs" />
+    <Compile Include="Document.cs" />
+    <Compile Include="Elements\ChartElement.cs" />
+    <Compile Include="Elements\ChartSeriesElement.cs" />
+    <Compile Include="Elements\DataElementDescriptor.cs" />
+    <Compile Include="Elements\ShapeElement.cs" />
+    <Compile Include="Elements\ShapeElementBase.cs" />
+    <Compile Include="Elements\TableElement.cs" />
+    <Compile Include="Elements\TextElement.cs" />
+    <Compile Include="Extensions\OpenXmlElementExtensions.cs" />
+    <Compile Include="Extensions\ParagraphExtensions.cs" />
+    <Compile Include="Extensions\RunExtensions.cs" />
+    <Compile Include="Extensions\ShapeExtensions.cs" />
+    <Compile Include="Extensions\SlidePartExtensions.cs" />
+    <Compile Include="Extensions\TableCellExtensions.cs" />
+    <Compile Include="Generator.cs" />
+    <Compile Include="ParameterHelpers.cs" />
+    <Compile Include="Processing\ChartElementProcessor.cs" />
+    <Compile Include="Processing\ChartType.cs" />
+    <Compile Include="Processing\DataElementProcessor.cs" />
+    <Compile Include="Processing\IShapeElementProcessor.cs" />
+    <Compile Include="Processing\ShapeProcessor.cs" />
+    <Compile Include="Processing\SlideProcessor.cs" />
+    <Compile Include="Processing\SpreadsheetProcessor.cs" />
+    <Compile Include="Processing\TableElementProcessor.cs" />
+    <Compile Include="Processing\ShapeElementProcessor.cs" />
+    <Compile Include="Processing\TextElementProcessor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SlideElement.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\McKinsey.PowerPointGenerator.Core\McKinsey.PowerPointGenerator.Core.csproj">
+      <Project>{126ee66a-9af7-4aae-bd69-ca6077fff754}</Project>
+      <Name>McKinsey.PowerPointGenerator.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\McKinsey.PowerPointGenerator.ExcelDataImporter\McKinsey.PowerPointGenerator.ExcelDataImporter.csproj">
+      <Project>{adb0b734-f08b-4178-8cec-f3286ef1cee7}</Project>
+      <Name>McKinsey.PowerPointGenerator.ExcelDataImporter</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,200 @@
+﻿<p:sp xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
+  <p:nvSpPr>
+    <p:cNvPr id="9" name="DATA:customer" />
+    <p:cNvSpPr txBox="1">
+      <a:spLocks xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" />
+    </p:cNvSpPr>
+    <p:nvPr />
+  </p:nvSpPr>
+  <p:spPr>
+    <a:xfrm xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+      <a:off x="650221" y="1763969" />
+      <a:ext cx="4189411" cy="301367" />
+    </a:xfrm>
+    <a:prstGeom prst="rect" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+      <a:avLst />
+    </a:prstGeom>
+    <a:ln xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+      <a:noFill />
+      <a:headEnd />
+      <a:tailEnd />
+    </a:ln>
+    <a:effectLst xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" />
+    <a:extLst xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" />
+  </p:spPr>
+  <p:style>
+    <a:lnRef idx="1" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+      <a:schemeClr val="accent2" />
+    </a:lnRef>
+    <a:fillRef idx="3" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+      <a:schemeClr val="accent2" />
+    </a:fillRef>
+    <a:effectRef idx="2" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+      <a:schemeClr val="accent2" />
+    </a:effectRef>
+    <a:fontRef idx="minor" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+      <a:schemeClr val="lt1" />
+    </a:fontRef>
+  </p:style>
+  <p:txBody>
+    <a:bodyPr vert="horz" wrap="square" lIns="73152" tIns="73152" rIns="73152" bIns="73152" numCol="1" anchor="ctr" anchorCtr="0" compatLnSpc="1" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+      <a:prstTxWarp prst="textNoShape">
+        <a:avLst />
+      </a:prstTxWarp>
+      <a:noAutofit />
+    </a:bodyPr>
+    <a:lstStyle xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+      <a:defPPr>
+        <a:defRPr lang="en-US" />
+      </a:defPPr>
+      <a:lvl1pPr marL="0" lvl="0" indent="0" defTabSz="895350" eaLnBrk="1" hangingPunct="1">
+        <a:buClr>
+          <a:schemeClr val="tx2" />
+        </a:buClr>
+        <a:defRPr sz="1400" b="1" baseline="0">
+          <a:solidFill>
+            <a:schemeClr val="accent2">
+              <a:lumMod val="10000" />
+            </a:schemeClr>
+          </a:solidFill>
+          <a:latin typeface="+mn-lt" />
+        </a:defRPr>
+      </a:lvl1pPr>
+      <a:lvl2pPr marL="193675" lvl="1" indent="-192088" defTabSz="895350" eaLnBrk="1" hangingPunct="1">
+        <a:buClr>
+          <a:schemeClr val="tx2" />
+        </a:buClr>
+        <a:buSzPct val="125000" />
+        <a:buFont typeface="Arial" charset="0" />
+        <a:buChar char="▪" />
+        <a:defRPr baseline="0">
+          <a:latin typeface="+mn-lt" />
+        </a:defRPr>
+      </a:lvl2pPr>
+      <a:lvl3pPr marL="457200" lvl="2" indent="-261938" defTabSz="895350" eaLnBrk="1" hangingPunct="1">
+        <a:buClr>
+          <a:schemeClr val="tx2" />
+        </a:buClr>
+        <a:buSzPct val="120000" />
+        <a:buFont typeface="Arial" charset="0" />
+        <a:buChar char="–" />
+        <a:defRPr baseline="0">
+          <a:latin typeface="+mn-lt" />
+        </a:defRPr>
+      </a:lvl3pPr>
+      <a:lvl4pPr marL="614363" lvl="3" indent="-155575" defTabSz="895350" eaLnBrk="1" hangingPunct="1">
+        <a:buClr>
+          <a:schemeClr val="tx2" />
+        </a:buClr>
+        <a:buSzPct val="120000" />
+        <a:buFont typeface="Arial" charset="0" />
+        <a:buChar char="▫" />
+        <a:defRPr baseline="0">
+          <a:latin typeface="+mn-lt" />
+        </a:defRPr>
+      </a:lvl4pPr>
+      <a:lvl5pPr marL="749808" lvl="4" indent="-130175" defTabSz="895350" eaLnBrk="1" hangingPunct="1">
+        <a:buClr>
+          <a:schemeClr val="tx2" />
+        </a:buClr>
+        <a:buSzPct val="89000" />
+        <a:buFont typeface="Arial" charset="0" />
+        <a:buChar char="-" />
+        <a:defRPr baseline="0">
+          <a:latin typeface="+mn-lt" />
+        </a:defRPr>
+      </a:lvl5pPr>
+      <a:lvl6pPr marL="749808" indent="-130175" defTabSz="895350" fontAlgn="base">
+        <a:spcBef>
+          <a:spcPct val="0" />
+        </a:spcBef>
+        <a:spcAft>
+          <a:spcPct val="0" />
+        </a:spcAft>
+        <a:buClr>
+          <a:schemeClr val="tx2" />
+        </a:buClr>
+        <a:buSzPct val="89000" />
+        <a:buFont typeface="Arial" charset="0" />
+        <a:buChar char="-" />
+        <a:defRPr baseline="0">
+          <a:latin typeface="+mn-lt" />
+        </a:defRPr>
+      </a:lvl6pPr>
+      <a:lvl7pPr marL="749808" indent="-130175" defTabSz="895350" fontAlgn="base">
+        <a:spcBef>
+          <a:spcPct val="0" />
+        </a:spcBef>
+        <a:spcAft>
+          <a:spcPct val="0" />
+        </a:spcAft>
+        <a:buClr>
+          <a:schemeClr val="tx2" />
+        </a:buClr>
+        <a:buSzPct val="89000" />
+        <a:buFont typeface="Arial" charset="0" />
+        <a:buChar char="-" />
+        <a:defRPr baseline="0">
+          <a:latin typeface="+mn-lt" />
+        </a:defRPr>
+      </a:lvl7pPr>
+      <a:lvl8pPr marL="749808" indent="-130175" defTabSz="895350" fontAlgn="base">
+        <a:spcBef>
+          <a:spcPct val="0" />
+        </a:spcBef>
+        <a:spcAft>
+          <a:spcPct val="0" />
+        </a:spcAft>
+        <a:buClr>
+          <a:schemeClr val="tx2" />
+        </a:buClr>
+        <a:buSzPct val="89000" />
+        <a:buFont typeface="Arial" charset="0" />
+        <a:buChar char="-" />
+        <a:defRPr baseline="0">
+          <a:latin typeface="+mn-lt" />
+        </a:defRPr>
+      </a:lvl8pPr>
+      <a:lvl9pPr marL="749808" indent="-130175" defTabSz="895350" fontAlgn="base">
+        <a:spcBef>
+          <a:spcPct val="0" />
+        </a:spcBef>
+        <a:spcAft>
+          <a:spcPct val="0" />
+        </a:spcAft>
+        <a:buClr>
+          <a:schemeClr val="tx2" />
+        </a:buClr>
+        <a:buSzPct val="89000" />
+        <a:buFont typeface="Arial" charset="0" />
+        <a:buChar char="-" />
+        <a:defRPr baseline="0">
+          <a:latin typeface="+mn-lt" />
+        </a:defRPr>
+      </a:lvl9pPr>
+    </a:lstStyle>
+    <a:p xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+      <a:r>
+        <a:rPr lang="en-US" sz="1300" dirty="0" smtClean="0">
+          <a:solidFill>
+            <a:schemeClr val="bg1" />
+          </a:solidFill>
+        </a:rPr>
+        <a:t>Business </a:t>
+      </a:r>
+      <a:r>
+        <a:rPr lang="en-US" sz="1300" dirty="0" smtClean="0">
+          <a:solidFill>
+            <a:schemeClr val="bg1" />
+          </a:solidFill>
+        </a:rPr>
+        <a:t>profile, ##, 2014</a:t>
+      </a:r>
+      <a:endParaRPr lang="en-US" sz="1300" dirty="0" smtClean="0">
+        <a:solidFill>
+          <a:schemeClr val="bg1" />
+        </a:solidFill>
+      </a:endParaRPr>
+    </a:p>
+  </p:txBody>
+</p:sp>

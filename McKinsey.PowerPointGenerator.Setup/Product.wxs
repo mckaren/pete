@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define McKinsey.PowerPointGenerator.App_TargetDir=$(var.McKinsey.PowerPointGenerator.App.TargetDir)?>
+  <Product Id="*" Name="McKinsey PowerPoint Generator" Language="1033" Version="1.0.0.2" Manufacturer="McKinsey Digital Labs" UpgradeCode="811B697F-C15A-4059-B3A3-0E1CE6ADC278">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_45_OR_LATER_INSTALLED" />
+    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again."><![CDATA[Installed OR WIX_IS_NETFRAMEWORK_45_OR_LATER_INSTALLED]]></Condition>
+    <Upgrade Id="EDBF5BCC-AC32-4FBE-A221-D3EE8B14A65B">
+      <UpgradeVersion Minimum="0.0.0.1" Maximum="1.0.0.0" Property="PREVIOUSVERSIONSINSTALLED" IncludeMinimum="yes" IncludeMaximum="no" />
+    </Upgrade>
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallInitialize" />
+    </InstallExecuteSequence>
+
+    <!--Add Cab1.cab File inside the Package-->
+    <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
+    <!--Here We Install Our Main App-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="McKinsey PowerPoint Generator" />
+      </Directory>
+      <!-- Step 1: For the Program Menu -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="McKinsey PowerPoint Generator" />
+      </Directory>
+      <!--Step 2:For Desktop Folder-->
+      <Directory Id="DesktopFolder" />
+    </Directory>
+
+    <!-- Step 1.1: Add the shortcut to your installer package Program Menu or Start Menu-->
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="171D5D3E-C16A-48BB-95F9-396C18655680">
+        <!--Add Shortcut of the Application in start Menu-->
+        <Shortcut Id="ApplicationStartMenuShortcut" Name="McKinsey PowerPoint Generator" Description="McKinsey PowerPoint Generator" Target="[INSTALLFOLDER]McKinsey.PowerPointGenerator.App.exe" WorkingDirectory="INSTALLFOLDER">
+          <Icon Id="MenuIconId" SourceFile=".\solution-app-icon.ico" />
+        </Shortcut>
+        <!--Remove the Folder At time of Uninstall-->
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\McKinsey\McKinsey_PowerPoint_Generator" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <!-- Step 2.1: Add the shortcut to your installer package For DeskTop-->
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="ApplicationDeskShortcutComp" Guid="05D73163-0B0D-4F89-BEBC-5A8C2338F88F">
+        <Shortcut Id="ApplicationDeskShortcut" Name="McKinsey PowerPoint Generator" Description="McKinsey PowerPoint Generator" Target="[INSTALLFOLDER]McKinsey.PowerPointGenerator.App.exe" WorkingDirectory="INSTALLFOLDER">
+          <Icon Id="DeskIconId" SourceFile=".\solution-app-icon.ico" />
+        </Shortcut>
+        <RemoveFolder Id="DesktopFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\McKinsey\Market_Share_Simulator_Licensing" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <!--Add Component-->
+    <Feature Id="MainApplication" Title="Main Application" Level="1">
+      <!--Step 1.2:Add Start menu or program  Shortcut-->
+      <ComponentRef Id="ApplicationShortcut" />
+      <!--step 2.2Add DeskTop Shortcut-->
+      <ComponentRef Id="ApplicationDeskShortcutComp" />
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+  </Product>
+
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+      <!-- <Component Id="ProductComponent"> -->
+      <!-- TODO: Insert files, registry keys, and other resources here. -->
+      <!-- </Component> -->
+      <Component Id="DocumentFormat.OpenXml.dll" Guid="a447feb1-5126-4603-9917-21e8c1164519">
+        <File Id="DocumentFormat.OpenXml.dll" Name="DocumentFormat.OpenXml.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)DocumentFormat.OpenXml.dll" />
+      </Component>
+      <Component Id="MahApps.Metro.dll" Guid="3e27876d-f433-4885-8e8a-837df49ca156">
+        <File Id="MahApps.Metro.dll" Name="MahApps.Metro.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)MahApps.Metro.dll" />
+      </Component>
+      <Component Id="System.Windows.Interactivity.dll" Guid="d2088930-0af2-4fdc-b8fd-3803482c361e">
+        <File Id="System.Windows.Interactivity.dll" Name="System.Windows.Interactivity.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)System.Windows.Interactivity.dll" />
+      </Component>
+      <Component Id="NCalc.dll" Guid="d74a609c-3119-4ab6-b413-95cc0e1fb8ed">
+        <File Id="NCalc.dll" Name="NCalc.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)NCalc.dll" />
+      </Component>
+      <Component Id="Newtonsoft.Json.dll" Guid="51f20262-4748-4026-a09f-fd23e6a4daff">
+        <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="NLog.dll" Guid="907e89c4-4242-425a-b4f5-95d1a81e6d24">
+        <File Id="NLog.dll" Name="NLog.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)NLog.dll" />
+      </Component>
+      <Component Id="SpreadsheetGear2012.Core.dll" Guid="37ee1f4d-9ea3-4ab3-a2f8-d536b62dc2ec">
+        <File Id="SpreadsheetGear2012.Core.dll" Name="SpreadsheetGear2012.Core.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)SpreadsheetGear2012.Core.dll" />
+      </Component>
+      <Component Id="SpreadsheetGear2012.Drawing.dll" Guid="8d03daf5-fac2-4392-9e63-b29cd7d98526">
+        <File Id="SpreadsheetGear2012.Drawing.dll" Name="SpreadsheetGear2012.Drawing.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)SpreadsheetGear2012.Drawing.dll" />
+      </Component>
+      <Component Id="SpreadsheetGear2012.Windows.Forms.dll" Guid="900c8fcb-760f-4439-b84b-5b39baed5ba8">
+        <File Id="SpreadsheetGear2012.Windows.Forms.dll" Name="SpreadsheetGear2012.Windows.Forms.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)SpreadsheetGear2012.Windows.Forms.dll" />
+      </Component>
+      <Component Id="SpreadsheetGear2012.Windows.Forms.Integration.dll" Guid="8d94c398-2fb0-469b-8529-31bcc53354fd">
+        <File Id="SpreadsheetGear2012.Windows.Forms.Integration.dll" Name="SpreadsheetGear2012.Windows.Forms.Integration.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)SpreadsheetGear2012.Windows.Forms.Integration.dll" />
+      </Component>
+      <Component Id="SpreadsheetGear2012.Windows.WPF.dll" Guid="468501ea-9d44-4c00-a859-9f6c4281aa7d">
+        <File Id="SpreadsheetGear2012.Windows.WPF.dll" Name="SpreadsheetGear2012.Windows.WPF.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)SpreadsheetGear2012.Windows.WPF.dll" />
+      </Component>
+      <Component Id="Microsoft.Practices.Unity.Configuration.dll" Guid="83881840-fab2-41c7-83af-1adcd2916ab6">
+        <File Id="Microsoft.Practices.Unity.Configuration.dll" Name="Microsoft.Practices.Unity.Configuration.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)Microsoft.Practices.Unity.Configuration.dll" />
+      </Component>
+      <Component Id="Microsoft.Practices.Unity.dll" Guid="7f3cea9e-3f24-4000-bcb7-3773f7ea5c3d">
+        <File Id="Microsoft.Practices.Unity.dll" Name="Microsoft.Practices.Unity.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)Microsoft.Practices.Unity.dll" />
+      </Component>
+      <Component Id="Microsoft.Practices.Unity.RegistrationByConvention.dll" Guid="624b82f3-ab6d-4c70-974e-670c4046429b">
+        <File Id="Microsoft.Practices.Unity.RegistrationByConvention.dll" Name="Microsoft.Practices.Unity.RegistrationByConvention.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)Microsoft.Practices.Unity.RegistrationByConvention.dll" />
+      </Component>
+      <Component Id="DevExpress.Mvvm.v15.2.dll" Guid="24ca75ed-de15-40b1-bc84-b0812c2e0493">
+        <File Id="DevExpress.Mvvm.v15.2.dll" Name="DevExpress.Mvvm.v15.2.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)DevExpress.Mvvm.v15.2.dll" />
+      </Component>
+      <Component Id="DevExpress.Printing.v15.2.Core.dll" Guid="06885a00-3d8c-4b6b-a89e-faf6b6b58f4c">
+        <File Id="DevExpress.Printing.v15.2.Core.dll" Name="DevExpress.Printing.v15.2.Core.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)DevExpress.Printing.v15.2.Core.dll" />
+      </Component>
+      <Component Id="DevExpress.Xpf.Core.v15.2.dll" Guid="7777e80f-bb3d-45d0-b3b3-f4d202839320">
+        <File Id="DevExpress.Xpf.Core.v15.2.dll" Name="DevExpress.Xpf.Core.v15.2.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)DevExpress.Xpf.Core.v15.2.dll" />
+      </Component>
+      <Component Id="McKinsey.PowerPointGenerator.App.exe" Guid="3cf99619-c0a5-42a8-b7fe-a79397dcbeb6">
+        <File Id="McKinsey.PowerPointGenerator.App.exe" Name="McKinsey.PowerPointGenerator.App.exe" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)McKinsey.PowerPointGenerator.App.exe" />
+      </Component>
+      <Component Id="McKinsey.PowerPointGenerator.App.exe.config" Guid="b9ca8058-b38f-46c3-8cc1-37cc751ef3dd">
+        <File Id="McKinsey.PowerPointGenerator.App.exe.config" Name="McKinsey.PowerPointGenerator.App.exe.config" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)McKinsey.PowerPointGenerator.App.exe.config" />
+      </Component>
+      <Component Id="McKinsey.PowerPointGenerator.Core.dll" Guid="8f721ef0-3e2c-444a-8273-361e264b45d2">
+        <File Id="McKinsey.PowerPointGenerator.Core.dll" Name="McKinsey.PowerPointGenerator.Core.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)McKinsey.PowerPointGenerator.Core.dll" />
+      </Component>
+      <Component Id="McKinsey.PowerPointGenerator.dll" Guid="82c44586-7fc4-46fe-a340-324aebd49c01">
+        <File Id="McKinsey.PowerPointGenerator.dll" Name="McKinsey.PowerPointGenerator.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)McKinsey.PowerPointGenerator.dll" />
+      </Component>
+      <Component Id="McKinsey.PowerPointGenerator.ExcelDataImporter.dll" Guid="a81cd640-459e-4c84-8a67-723553832de9">
+        <File Id="McKinsey.PowerPointGenerator.ExcelDataImporter.dll" Name="McKinsey.PowerPointGenerator.ExcelDataImporter.dll" Source="$(var.McKinsey.PowerPointGenerator.App_TargetDir)McKinsey.PowerPointGenerator.ExcelDataImporter.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

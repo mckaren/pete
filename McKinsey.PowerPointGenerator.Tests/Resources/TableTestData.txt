@@ -1,0 +1,97 @@
+{
+  "Name": "SpendByRevenues",
+  "Columns": [
+    {
+      "Header": "#Cl1N#",
+      "Data": [
+        9.5,
+        8.5
+      ]
+    },
+    {
+      "Header": "#P1N#",
+      "Data": [
+        8.5,
+        7.5
+      ]
+    },
+    {
+      "Header": "#P2N#",
+      "Data": [
+        10.5,
+        6.5
+      ]
+    },
+    {
+      "Header": "#P3N#",
+      "Data": [
+        11.5,
+        5.5
+      ]
+    },
+    {
+      "Header": "#P4N#",
+      "Data": [
+        12.5,
+        4.5
+      ]
+    },
+    {
+      "Header": "#P5N#",
+      "Data": [
+        13.5,
+        3.5
+      ]
+    },
+    {
+      "Header": "#P6N#",
+      "Data": [
+        14.5,
+        2.5
+      ]
+    },
+    {
+      "Header": "#P7N#",
+      "Data": [
+        15.5,
+        1.5
+      ]
+    },
+    {
+      "Header": "#P8N#",
+      "Data": [
+        13.5,
+        0.5
+      ]
+    },
+    {
+      "Header": "#P9N#",
+      "Data": [
+        15.5,
+        1.0
+      ]
+    },
+    {
+      "Header": "#P10N#",
+      "Data": [
+        19.5,
+        3.0
+      ]
+    },
+    {
+      "Header": "#P11N#",
+      "Data": [
+        9.5,
+        8.5
+      ]
+    }
+  ],
+  "Rows": [
+    {
+      "Header": "PM"
+    },
+    {
+      "Header": "IT"
+    }
+  ]
+}

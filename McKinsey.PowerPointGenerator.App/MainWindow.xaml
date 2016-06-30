@@ -1,0 +1,108 @@
+﻿<Controls:MetroWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:local="clr-namespace:McKinsey.PowerPointGenerator.App" 
+    xmlns:Converters="clr-namespace:McKinsey.PowerPointGenerator.App.Converters"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    mc:Ignorable="d" 
+    x:Class="McKinsey.PowerPointGenerator.App.MainWindow"
+    ResizeMode="CanResizeWithGrip"
+    SaveWindowPosition="True"
+    GlowBrush="{DynamicResource AccentColorBrush}"
+    Title="Horizon360 PowerPoint Generator" Height="300" Width="900" ShowIconOnTitleBar="False" ShowTitleBar="False"
+    d:DataContext="{d:DesignInstance {x:Type local:MainViewModel}, IsDesignTimeCreatable=True}"
+    DataContext="{dxmvvm:ViewModelSource Type={x:Type local:MainViewModel}}">
+
+    <Controls:MetroWindow.Resources>
+        <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <Style TargetType="{x:Type TextBox}"
+           x:Key="BrowseMetroTextBox"
+           BasedOn="{StaticResource MetroButtonTextBox}">
+            <Setter Property="Controls:TextBoxHelper.ButtonTemplate">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Grid x:Name="contentPresenter"
+        						HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+        						Margin="{TemplateBinding Padding}"
+        						VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+        						SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+        						Opacity="0.75">
+                                <Canvas Width="15"
+        							Height="15"
+        							Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0">
+                                    <!-- x:Key="appbar_magnify"-->
+                                    <Path Width="15.7781"
+        								Height="15.7781"
+        								Stretch="Fill"
+        								Fill="{TemplateBinding Foreground}"
+        								Data="M0,21.940001L64,21.940001 58.81641,53.042002 5.4832716,53.042002z M5.4829998,0L26.983213,0 26.983213,6.5154943 58.805,6.5154943 58.805,14.362 5.5063095,14.362 5.5063095,7.1121521 5.4829998,7.1121521z" />
+                                </Canvas>
+                            </Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+        						Value="True">
+                                <Setter TargetName="contentPresenter"
+        							Property="Opacity"
+        							Value="1" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver"
+        						Value="False">
+                                <Setter TargetName="contentPresenter"
+        							Property="Opacity"
+        							Value=".5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Controls:MetroWindow.Resources>
+
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:CurrentWindowService x:Name="RootView" Window="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" />
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Source="Resources/solution-logo.png" Stretch="None" Margin="5,5,0,0" Grid.ColumnSpan="2" Height="49" Width="302"/>
+        <Label Content="PowerPoint Generator" FontSize="22" FontFamily="Segoe UI Semilight" Foreground="#FF666666" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="39" Width="225" Margin="312,0,0,16" />
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="155"/>
+                <ColumnDefinition Width="161*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="36"/>
+                <RowDefinition Height="36"/>
+                <RowDefinition/>
+                <RowDefinition Height="15"/>
+            </Grid.RowDefinitions>
+            <Label Content="Input files" FontSize="22" FontFamily="Segoe UI Semilight" Foreground="#FF666666" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="39" />
+
+            <Label Content="Excel data file" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Light" Height="31" Width="101"/>
+            <TextBox Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" FontSize="16" Height="30" FontFamily="Segoe UI Light"
+				Controls:TextBoxHelper.Watermark="Excel data file..." Style="{DynamicResource BrowseMetroTextBox}"
+				Controls:TextBoxHelper.ButtonCommand="{Binding BrowseExcelCommand}" Text="{Binding DataFilePath}" />
+
+            <Label Content="PowerPoint template" Grid.Row="2" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Light" HorizontalAlignment="Left" Height="31" Width="149"/>
+            <TextBox Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" FontSize="16" Height="30" FontFamily="Segoe UI Light"
+				Controls:TextBoxHelper.Watermark="PowerPoint template file..." Style="{DynamicResource BrowseMetroTextBox}"
+				Controls:TextBoxHelper.ButtonCommand="{Binding BrowsePowerPointCommand}" Text="{Binding TemplateFilePath}" />
+
+            <Button Content="Generate" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{DynamicResource AccentedSquareButtonStyle}" Grid.Row="3" Grid.Column="1" FontSize="16" FontFamily="Segoe UI Semilight" Width="100" Command="{Binding GenerateCommand}"/>
+            <Label Content="v1.0.0.2" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" FontSize="9" ScrollViewer.CanContentScroll="True" Padding="0" Grid.IsSharedSizeScope="True" Margin="10,0,0,0"/>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>
