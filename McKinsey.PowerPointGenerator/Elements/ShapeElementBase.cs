@@ -206,7 +206,17 @@ namespace McKinsey.PowerPointGenerator.Elements
                 var yCommand = command as YCommand;
                 if (yCommand != null)
                 {
-                    ColumnIndexes.Add(yCommand.Index);
+                    if (isTransposed)
+                    {
+                        if (!RowIndexes.Any(i => i == yCommand.Index || i.IsAll))
+                        {
+                            RowIndexes.Add(yCommand.Index);
+                        }
+                    }
+                    else
+                    {
+                        ColumnIndexes.Add(yCommand.Index);
+                    }
                 }
             }
         }
