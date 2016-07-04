@@ -313,10 +313,13 @@ namespace McKinsey.PowerPointGenerator.Processing
                     var values = seriesItem.FirstElement<Values>();
                     FillNumberReference(values.NumberReference, newSeriesItem, dataColumn);
                     FillSeriesDataPoints(seriesItem, dataColumn);
-                    SetPropertiesFromLegend(seriesItem, dataColumn);
                     if (isWaterfall)
                     {
                         FillSeriesLabels(seriesItem, dataColumn);
+                    }
+                    SetPropertiesFromLegend(seriesItem, dataColumn);
+                    if (isWaterfall)
+                    {
                         SetWaterfallStructure(seriesItem, dataColumn);
                     }
 
@@ -445,7 +448,7 @@ namespace McKinsey.PowerPointGenerator.Processing
                         }
                         if (defaultChartShapeProperties != null)
                         {
-                            newDataLabel.Append(labels.FirstElement<ChartShapeProperties>().CloneNode(true));
+                            newDataLabel.Append(defaultChartShapeProperties.CloneNode(true));
                         }
                         if (defaultTextProperties != null)
                         {
@@ -515,7 +518,7 @@ namespace McKinsey.PowerPointGenerator.Processing
                 {
                     ShapeElement legend = dataColumn.Legends[rowNo] as ShapeElement;
                     DataPoint dataPoint = dataPoints.FirstOrDefault(p => p.Index != null && p.Index.Val != null && p.Index.Val.Value == rowNo);
-                    if (legend != null)
+                    if (legend != null) //KAJ: Actually always true if you have reached this line
                     {
                         if (dataPoint != null)
                         {
