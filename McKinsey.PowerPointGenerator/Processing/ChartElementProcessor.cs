@@ -303,7 +303,7 @@ namespace McKinsey.PowerPointGenerator.Processing
             for (int i = 0; i < newSeries.Count; i++)
             {
                 ChartSeriesElement newSeriesItem = newSeries[i];
-                if ((element.RowIndexes.Count == 1 && element.RowIndexes[0].IsAll) || element.ColumnIndexes.Any(idx => idx == newSeriesItem.ColumnIndex) || element.RowIndexes.Any(idx => idx == newSeriesItem.ColumnIndex))
+                if ((element.RowIndexes.Count == 1 && element.RowIndexes[0].IsAll) || element.ColumnIndexes.Any(idx => idx == newSeriesItem.ColumnIndex) || element.RowIndexes.Any(idx => idx == newSeriesItem.ColumnIndex) || isWaterfall)
                 {
                     var seriesItem = seriesList.ElementAt(index);
                     Column dataColumn = element.Data.Column(newSeriesItem.ColumnIndex);
@@ -538,6 +538,12 @@ namespace McKinsey.PowerPointGenerator.Processing
                                     labelTextProperties = labels.FirstElement<TextProperties>().CloneNode(true) as TextProperties;
                                     label.Append(labelTextProperties);
                                 }
+                                NumberingFormat labelNumberingFormat = label.FirstElement<NumberingFormat>();
+                                if (labelNumberingFormat == null)
+                                {
+                                    labelNumberingFormat = labels.FirstElement<NumberingFormat>().CloneNode(true) as NumberingFormat;
+                                    label.Append(labelNumberingFormat);
+                                }
                                 A.Paragraph labelParagraph = labelTextProperties.FirstElement<A.Paragraph>();
                                 var legendRunProperties = legend.Element.GetRunProperties();
                                 labelParagraph.ParagraphProperties.RemoveAllChildren<A.DefaultRunProperties>();
@@ -548,15 +554,15 @@ namespace McKinsey.PowerPointGenerator.Processing
                                 }
                                 var newLabelRunProperties = new A.DefaultRunProperties(list);
                                 labelParagraph.ParagraphProperties.Append(newLabelRunProperties);
-                                var labelShapeProperties = label.FirstElement<ChartShapeProperties>();
+                                var labelShapeProperties = label.FirstElement<ChartShapeProperties>();                               
                                 if (labelShapeProperties != null && labelShapeProperties.FirstElement<A.NoFill>() == null)
                                 {
                                     label.RemoveAllChildren<ChartShapeProperties>();
-                                    A.SolidFill legendFill = legend.Element.GetFill();
-                                    ChartShapeProperties chartShapeProperties = new ChartShapeProperties();
-                                    chartShapeProperties.Append(legendFill);
-                                    label.Append(chartShapeProperties);
                                 }
+                                A.SolidFill legendFill = legend.Element.GetFill();
+                                ChartShapeProperties chartShapeProperties = new ChartShapeProperties();
+                                chartShapeProperties.Append(legendFill);
+                                label.Append(chartShapeProperties);                            
                             }
                         }
                     }

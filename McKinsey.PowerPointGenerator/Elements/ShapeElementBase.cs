@@ -215,7 +215,10 @@ namespace McKinsey.PowerPointGenerator.Elements
                     }
                     else
                     {
-                        ColumnIndexes.Add(yCommand.Index);
+                        if (!ColumnIndexes.Any(i => i == yCommand.Index || i.IsAll))
+                        {
+                            ColumnIndexes.Add(yCommand.Index);
+                        }
                     }
                 }
             }
