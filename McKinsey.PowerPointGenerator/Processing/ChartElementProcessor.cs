@@ -269,7 +269,7 @@ namespace McKinsey.PowerPointGenerator.Processing
                 }
                 if (yValuesSeries == null)
                 {
-                    throw new Exception("At least on Y series required for scatter chart");
+                    throw new Exception("At least one Y series required for scatter chart");
                 }
                 ChartSeriesElement newSeriesItem = newSeries.ElementAt(i);
                 if ((element.RowIndexes.Count == 1 && element.RowIndexes[0].IsAll) || element.ColumnIndexes.Any(idx => idx == newSeriesItem.ColumnIndex) || element.RowIndexes.Any(idx => idx == newSeriesItem.ColumnIndex))
