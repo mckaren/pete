@@ -108,18 +108,37 @@ namespace McKinsey.PowerPointGenerator.Elements
             {
                 string indexes = match.Groups["indexes"].Value;
                 CommandString = match.Groups["commands"].Value;
-                foreach (var fragment in indexes.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries))
+                string name = match.Groups["name"].Value;
+                if (!string.IsNullOrEmpty(indexes))
                 {
-                    string name = match.Groups["name"].Value;
-                    Match indexMatch = indexParseRegex.Match(fragment);
-                    if (!CommandManager.KnownCommandsWithoutArguments.Contains(name.ToUpper()) && indexMatch.Success)
+                    foreach (var fragment in indexes.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries))
                     {
-                        DataElementDescriptor dataDescriptor = new DataElementDescriptor();
-                        dataDescriptor.Name = name;
-                        dataDescriptor.RowIndexesString = indexMatch.Groups["rows"].Value;
-                        dataDescriptor.ColumnIndexesString = indexMatch.Groups["columns"].Value;
-                        AdditionalDataDescriptors.Add(dataDescriptor);
-                    }           
+                        Match indexMatch = indexParseRegex.Match(fragment);
+                        if (!CommandManager.KnownCommandsWithoutArguments.Contains(name.ToUpper())) //KAJ: Is this ever false?
+                        {
+                            DataElementDescriptor dataDescriptor = new DataElementDescriptor();
+                            dataDescriptor.Name = name;
+                            if (indexMatch.Success)
+                            {
+                                dataDescriptor.RowIndexesString = indexMatch.Groups["rows"].Value;
+                                dataDescriptor.ColumnIndexesString = indexMatch.Groups["columns"].Value;
+                            }
+                            else
+                            {
+                                dataDescriptor.RowIndexesString = match.Groups["rows"].Value;
+                                dataDescriptor.ColumnIndexesString = match.Groups["columns"].Value;
+                            }
+                            AdditionalDataDescriptors.Add(dataDescriptor);
+                        }
+                    }
+                }
+                else
+                {
+                    DataElementDescriptor dataDescriptor = new DataElementDescriptor();
+                    dataDescriptor.Name = name;
+                    dataDescriptor.RowIndexesString = null;
+                    dataDescriptor.ColumnIndexesString = null;
+                    AdditionalDataDescriptors.Add(dataDescriptor);
                 }
                 return true;
             }
